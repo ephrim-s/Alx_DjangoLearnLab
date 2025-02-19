@@ -14,7 +14,10 @@ def libriary_books(library_name):
     return "No books available"
 
 def librarian_library(library_name):
-    librarian_name = Librarian.objects.get(Library=library_name).first()
-    if librarian_name:
-        return librarian_name.librarian
-    return "No librarian available"
+    library = Library.objects.filter(name=library_name).first()
+    if library:
+        try:
+            return Librarian.objects.get(library=library)
+        except Librarian.DoesNotExist:
+            return "Not available"
+    return "Not available"
