@@ -4,7 +4,7 @@ from .models import Library, Author, Book, Librarian
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
-def all_books(request):
+def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {"books": books})
 
@@ -12,3 +12,8 @@ class BookListView(ListView):
     model = Book
     template_name = 'relationship_app/library_detail.html'
     context_object_name = "library"
+
+class BookDetailView(DetailView):
+    model = Book
+    template_name = "book_detail.html" 
+    context_object_name = "book"
