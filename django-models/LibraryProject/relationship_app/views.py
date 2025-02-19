@@ -17,3 +17,6 @@ class LibraryDetailView(DetailView):
     model = Library
     template_name = "library_detail.html"  
     context_object_name = "library" 
+    
+    def get_object(self, queryset=None):
+        return get_object_or_404(Library, pk=self.kwargs.get("pk"))
