@@ -1,7 +1,7 @@
 from relationship_app.models import Author, Book, Library, Librarian
 
-def author_book(author):
-    author_name = Author.objects.get(author=author).first()
+def author_book(author_name):
+    author= Author.objects.get(name=author_name)
     if author:
         return author.books.all()
     return "No books available"
