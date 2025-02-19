@@ -14,7 +14,7 @@ def libriary_books(library_name):
     return "No books available"
 
 def librarian_library(library_name):
-    library = Library.objects.get(name=library_name).first()
-    if library:
-        return library.librarian
+    librarian_name = Librarian.objects.get(Library=library_name).first()
+    if librarian_name:
+        return librarian_name.librarian
     return "No librarian available"
