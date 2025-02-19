@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import loader
 from .models import Library, Author, Book, Librarian
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
 def list_books(request):
     books = Book.objects.all()
-    return render(request, 'relationship_app/list_books.html', {"books": books})
+    template = loader.get_template("relationship_app/list_books.html")
+    context = {"books": books}
+    return HttpResponse(template.render(context, request))
 
 class BookListView(ListView):
     model = Book
