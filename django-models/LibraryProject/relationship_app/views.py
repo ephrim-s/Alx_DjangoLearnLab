@@ -14,6 +14,6 @@ class BookListView(ListView):
     context_object_name = "library"
 
 class LibraryDetailView(DetailView):
-    model = Book
-    template_name = "book_detail.html" 
-    context_object_name = "book"
+    model = Library
+    template_name = "library_detail.html"  
+    context_object_name = "library" 
