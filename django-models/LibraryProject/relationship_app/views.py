@@ -28,7 +28,7 @@ class LibraryDetailView(DetailView):
         context["books"] = self.object.book_set.all()  # Assuming a ForeignKey from Book to Library
         return context
 
-def register_view(request):
+def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
