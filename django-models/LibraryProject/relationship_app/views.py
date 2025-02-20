@@ -1,15 +1,15 @@
-# from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render
+# from django.http import HttpResponse
+# from django.template import loader
 from .models import Library, Book
 # from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 
 def list_books(request):
     books = Book.objects.all()
-    template = loader.get_template("relationship_app/list_books.html")
+    # template = loader.get_template("relationship_app/list_books.html")
     context = {"books": books}
-    return HttpResponse(template.render(context, request))
+    return render(request, 'relationship_app/list_books.html', context)
 
 # class BookListView(ListView):
 #     model = Book
