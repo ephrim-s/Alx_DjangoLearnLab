@@ -39,9 +39,9 @@ class Book(models.Model):
 
     class Meta:
         permissions = [
-            ("canaddbook", "can add a new book"),
-            ("canchangebook", "can edit an existing book"),
-            ("candeletebok", "can delete a book"),
+            ("canaddbook", "can_add_book"),
+            ("canchangebook", "can_change_book"),
+            ("candeletebok", "can_delete_book"),
         ]
 
     def __str__(self):
