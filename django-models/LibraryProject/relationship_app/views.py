@@ -38,3 +38,4 @@ class LoginView(LoginView):
 
 class LogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
+
