@@ -39,9 +39,3 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form':form})
-
-class LoginView(LoginView):
-    template_name = 'relationship_app/login.html'
-
-class LogoutView(LogoutView):
-    template_name = 'authentication/logout.html'
