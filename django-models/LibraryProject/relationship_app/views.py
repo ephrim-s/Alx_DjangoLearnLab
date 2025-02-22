@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Library, Book
 from django.views.generic.detail import DetailView
 
+
 def list_books(request):
     books = Book.objects.all()
     # template = loader.get_template("relationship_app/list_books.html")
@@ -31,3 +32,9 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form':form})
+
+class LoginView(LoginView):
+    template_name = 'relationship_app/login.html'
+
+class LogoutView(LogoutView):
+    template_name = 'relationship_app/logout.html'
