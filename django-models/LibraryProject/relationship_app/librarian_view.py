@@ -1,11 +1,9 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required, user_passes_test
 
 def is_librarian(user):
-    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
-@login_required
 @user_passes_test(is_librarian)
 def librarian_dashboard(request):
-    return render(request, 'Librarian_dashboard.html')
-
+    return render(request, 'librarian_dashboard.html', {'user': request.user})
