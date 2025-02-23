@@ -85,13 +85,13 @@ def librarian_view(user):
 
 @user_passes_test(librarian_view)
 def librarian_dashboard(request):
-    return render(request, 'librarian_view.html', {'user': request.user})
+    return render(request, 'relationship_app/librarian_view.html', {'user': request.user})
 
 
-def member_viewr(user):
+def member_view(user):
     return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
-@user_passes_test(Member)
+@user_passes_test(member_view)
 def member_dashboard(request):
-    return render(request, 'member_view.html', {'user': request.user})
+    return render(request, 'relationship_app/member_view.html', {'user': request.user})
 

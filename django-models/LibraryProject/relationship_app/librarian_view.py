@@ -6,4 +6,4 @@ def librarian_view(user):
 
 @user_passes_test(librarian_view)
 def librarian_dashboard(request):
-    return render(request, 'librarian_view.html', {'user': request.user})
+    return render(request, 'relationship_app/librarian_view.html', {'user': request.user})
