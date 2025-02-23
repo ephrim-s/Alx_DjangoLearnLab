@@ -72,3 +72,26 @@ class LoginView(LoginView):
 
 class LogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
+
+def admin_view(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
+
+@user_passes_test(admin_view)
+def admin_dashboard(request):
+    return render(request, 'admin_view.html', {'user': request.user})
+
+def librarian_view(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
+
+@user_passes_test(librarian_view)
+def librarian_dashboard(request):
+    return render(request, 'librarian_view.html', {'user': request.user})
+
+
+def member_viewr(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
+
+@user_passes_test(Member)
+def member_dashboard(request):
+    return render(request, 'member_view.html', {'user': request.user})
+

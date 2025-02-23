@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 
-def membe_viewr(user):
+def member_viewr(user):
     return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
 @user_passes_test(Member)
