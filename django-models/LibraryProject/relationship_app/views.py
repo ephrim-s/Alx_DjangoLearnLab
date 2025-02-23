@@ -78,7 +78,7 @@ def admin_view(user):
 
 @user_passes_test(admin_view)
 def admin_dashboard(request):
-    return render(request, 'admin_view.html', {'user': request.user})
+    return render(request, 'relationship_app/admin_view.html', {'user': request.user})
 
 def librarian_view(user):
     return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
