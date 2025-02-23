@@ -14,7 +14,7 @@ urlpatterns = [
     path('add_book/', add_book, name='add_book'),
     path('edit_book/<int:book_id>/', edit_book, name='edit_book'),
     path('delete/<int:boo_id>/', delete_book, name='delete_book'),
-    path('admin/', Admin, name='admin_dashboard'),
-    path('librarian/', Librarian, name='librarian_dashboard'),
-    path('member/', Member, name='member_dashboard'),
+    path('admin/', admin_view, name='admin_dashboard'),
+    path('librarian/', librarian_view, name='librarian_dashboard'),
+    path('member/', member_view, name='member_dashboard'),
 ]
