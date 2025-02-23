@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import list_books, LibraryDetailView, LoginView, LogoutView, Admin, add_book, edit_book, delete_book
+from .views import list_books, LibraryDetailView, LoginView, LogoutView, add_book, edit_book, delete_book
 from . import views
 from .admin_view import Admin
 from .librarian_view import Librarian
