@@ -48,6 +48,16 @@ CSRF_COOKIE_HTTPONLY = True
 # This will not allow access to the session token cookies form the client side
 SESSION_COOKIE_HTTPONLY = True
 
+# This include subdomains in HSTS policy and allow HSTS preload
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# This directs all non-HTTPS request to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# This instructs browsers to only access the site via HTTPS for 1 year
+SECURE_HSTS_SECONDS = 31536000
+
 #This sets a default policy to only allow content from the same domain and restrict inline script and style
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'",)
