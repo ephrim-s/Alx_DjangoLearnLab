@@ -58,6 +58,9 @@ SECURE_SSL_REDIRECT = True
 # This instructs browsers to only access the site via HTTPS for 1 year
 SECURE_HSTS_SECONDS = 31536000
 
+# This allow django to trust the X-Forwarded-Proto header from the proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 #This sets a default policy to only allow content from the same domain and restrict inline script and style
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'",)
