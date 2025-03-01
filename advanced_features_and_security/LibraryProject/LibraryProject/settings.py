@@ -23,10 +23,35 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-dij$q6ne5ls2xgkics!u)rr=wvk!$9$$$s#6!arvu+(y_csck^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # when set to false errors in code are not displayed in the browser
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+# This enables the Cross-site scripting protection in the browser
+SECURE_BROWSER_XSS_FILTER = True
+
+# This prevents any domain from embedding in your site
+X_FRAME_OPTIONS = 'DENY'
+
+# This prevents sniffing attack
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# This ensures that CSRF token cookies are sent over the HTTPS
+CSRF_COOKIE_SECURE = True
+
+# This ensures that session cookies are sent over the HTTPS
+SESSION_COOKIE_SECURE = True
+
+# This will not allow access to CSRF token cookies from the client side
+CSRF_COOKIE_HTTPONLY = True
+
+# This will not allow access to the session token cookies form the client side
+SESSION_COOKIE_HTTPONLY = True
+
+#This sets a default policy to only allow content from the same domain and restrict inline script and style
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'",)
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'",)
 
 # Application definition
 
@@ -38,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookshelf',
+    'csp',
 ]
 
 MIDDLEWARE = [
@@ -48,7 +74,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
