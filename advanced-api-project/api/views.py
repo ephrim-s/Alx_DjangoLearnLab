@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django_filters import FilterSet, CharFilter, NumberFilter
+from django_filters import rest_framework
 from rest_framework import generics
 from rest_framework import OderingFilter
 from rest_framework import DjangoFilterBackend
