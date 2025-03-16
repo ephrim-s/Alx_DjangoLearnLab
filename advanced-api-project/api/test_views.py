@@ -12,6 +12,7 @@ class BookAPITests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='password123')
         self.token = Token.objects.create(user=self.user)
+        self.client.login(username='testuser', password='password123')
 
         self.book1 = Book.objects.create(title='Test Book 1', author='Author 1', published_date='2020-01-01')
         self.book2 = Book.objects.create(title='Test Book 2', author='Author 2', published_date='2021-01-01')
@@ -20,6 +21,7 @@ class BookAPITests(APITestCase):
         self.book_detail_url = lambda pk: reverse('book-detail', args=[pk])
 
     def test_create_book_authenticated(self):
+        self.client.login(username='testuser', password='password123')
         data = {
             'title': 'New Book',
             'author': 'New Author',
@@ -44,6 +46,7 @@ class BookAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_update_book_authenticated(self):
+        self.client.login(username='testuser', password='password123')
         data = {
             'title': 'Updated Book Title',
             'author': 'Updated Author',
@@ -59,6 +62,7 @@ class BookAPITests(APITestCase):
         self.assertEqual(self.book1.title, 'Updated Book Title')
 
     def test_delete_book_authenticated(self):
+        self.client.login(username='testuser', password='password123')
         response = self.client.delete(
             self.book_detail_url(self.book1.pk),
             HTTP_AUTHORIZATION='Token ' + self.token.key
@@ -88,6 +92,7 @@ class BookAPITests(APITestCase):
     def test_permissions_for_update_delete(self):
         user_without_permissions = User.objects.create_user(username='testuser2', password='password123')
         token_without_permissions = Token.objects.create(user=user_without_permissions)
+        self.client.login(username='testuser2', password='password123')
 
         data = {'title': 'Unauthorized Update'}
         response = self.client.put(
@@ -96,7 +101,6 @@ class BookAPITests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + token_without_permissions.key
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
 
         response = self.client.delete(
             self.book_detail_url(self.book1.pk),
