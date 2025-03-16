@@ -1,3 +1,5 @@
+# api/test_views.py
+
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
@@ -14,7 +16,7 @@ class BookAPITests(APITestCase):
         self.book1 = Book.objects.create(title='Test Book 1', author='Author 1', published_date='2020-01-01')
         self.book2 = Book.objects.create(title='Test Book 2', author='Author 2', published_date='2021-01-01')
 
-        self.book_list_url = reverse('book-list')  
+        self.book_list_url = reverse('book-list') 
         self.book_detail_url = lambda pk: reverse('book-detail', args=[pk])
 
     def test_create_book_authenticated(self):
@@ -23,6 +25,7 @@ class BookAPITests(APITestCase):
             'author': 'New Author',
             'published_date': '2022-01-01'
         }
+
         response = self.client.post(
             self.book_list_url,
             data,
@@ -72,7 +75,7 @@ class BookAPITests(APITestCase):
         self.assertEqual(len(response.data), 1)
 
         response = self.client.get(self.book_list_url, {'ordering': 'published_date'})
-        self.assertEqual(response.data[0]['title'], 'Test Book 1') 
+        self.assertEqual(response.data[0]['title'], 'Test Book 1')  
 
         response = self.client.get(self.book_list_url, {'title': 'Test Book 1'})
         self.assertEqual(len(response.data), 1)
@@ -93,6 +96,7 @@ class BookAPITests(APITestCase):
             HTTP_AUTHORIZATION='Token ' + token_without_permissions.key
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
 
         response = self.client.delete(
             self.book_detail_url(self.book1.pk),
