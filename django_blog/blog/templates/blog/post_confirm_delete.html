@@ -4,7 +4,7 @@
 <h1>Are you sure you want to delete the post?</h1>
 <form method="POST">
     {% csrf_token %}
-    <button type="submit>">Yes, Delete</button>
-    <a href="{% url "post-detail" post.pk %}">Cancel</a>
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'post-detail' post.pk %}">Cancel</a>
 </form>
 {% endblock content %}
