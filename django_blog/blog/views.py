@@ -12,6 +12,8 @@ def register(request):
             user = form.save()
             login(request, user)
             return redirect('profile')
+        else:
+            return render(request, 'blog/register.html', {'form': form, 'error': 'Registration failed. Please correct the errors below.'})
     else:
         form = CustomUserCreationForm()
     return render(request, 'blog/register.html', {'form':form})
@@ -23,6 +25,8 @@ def user_login(request):
             user = form.get_user()
             login(request, user)
             return redirect('profile')
+        else:
+            return render(request, 'blog/login.html', {'form': form, 'error': 'Invalid credentials'})
     else:
         form = AuthenticationForm()
     return render(request, 'blog/login.html', {'form': form})
