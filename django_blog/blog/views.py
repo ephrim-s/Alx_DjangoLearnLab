@@ -10,6 +10,7 @@ from .forms import CustomUserCreationForm, PostForm, CommentForm
 from django.db.models import Q
 from taggit.models import Tag
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
 
 def register(request):
     if request.method == "POST":
@@ -73,22 +74,17 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('post-detail', kwargs={'pk': self.object.pk})
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class PostUpdateView(UpdateView):
     model = Post
-    form_class = PostForm
-    template_name = 'blog/post_form.html'
+    fields = ['title', 'content', 'tags']  # Ensure 'tags' is included if using django-taggit
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('post-detail', kwargs={'pk': self.object.pk})
-
-    def test_func(self):
-        post = self.get_object()
-        return post.author == self.request.user
-
+        response = super().form_valid(form)
+        # Correctly update tags
+        tags = form.cleaned_data.get('tags', [])
+        if tags:
+            self.object.tags.set(*tags)  # Pass tags as a single iterable argument
+        return response
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post

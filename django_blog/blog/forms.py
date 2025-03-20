@@ -20,12 +20,15 @@ class PostForm(forms.ModelForm):
         }
     
     def save(self, commit=True):
-        instance = super().save(commit=True)
-        tags_str = self.cleaned_data['tags']
+        instance = super().save(commit=False)
+        tags_str = self.cleaned_data.get('tags', '')
         if commit:
-            instance.save()
-        if tags_str:
-            instance.tags.set(*[tag.strip() for tag in tags_str.split(',')])
+            instance.save()  # Save the instance before setting tags
+        if isinstance(tags_str, list):  # Ensure tags_str is a string
+            tags_str = ','.join(tags_str)
+        instance.tags.set(*[tag.strip() for tag in tags_str.split(',')])
+        if commit:
+            instance.save()  # Save again to persist tags
         return instance
 
 
