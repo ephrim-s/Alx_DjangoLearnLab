@@ -9,6 +9,7 @@ from .models import Post, Comment
 from .forms import CustomUserCreationForm, PostForm, CommentForm
 from django.db.models import Q
 from taggit.models import Tag
+from django.views.generic.list import ListView
 
 def register(request):
     if request.method == "POST":
@@ -154,7 +155,16 @@ def search_posts(request):
         ).distinct()
     return render(request, 'blog/search_results.html', {'result': results, 'query': query})
 
-def posts_by_tag(request, tag_slug):
-    tag = get_object_or_404(Tag, slug=tag_slug)
-    posts = Post.objects.filter(tags=tag)
-    return render(request, 'blog/posts_by_tag.html', {'tag': tag, 'posts': posts})
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/post_list_by_tag.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+        return Post.objects.filter(tags__slug=tag_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = Tag.objects.get(slug=self.kwargs.get('tag_slug'))
+        return context

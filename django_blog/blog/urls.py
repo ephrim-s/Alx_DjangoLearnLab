@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from .views import PostByTagListView
 
 urlpatterns = [
     path('login/', views.user_login, name='login'),
@@ -17,5 +18,5 @@ urlpatterns = [
     path('comment/<int:pk>/update/', views.CommentUpdateView.as_view(), name='comment-update'),
     path('comment/<int:pk>/delete/', views.CommentDeleteView.as_view(), name='comment-delete'),
     path('search/', views.search_posts, name='search_posts'),
-    path('tags/<slug:tag_slug>/', views.posts_by_tag, name='posts_by_tag'),
+    path('tag/<slug:tag_slug>/', PostByTagListView.as_view(), name='post_by_tag'),
 ]
