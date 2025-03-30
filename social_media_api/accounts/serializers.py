@@ -8,7 +8,7 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password', 'bio', 'profile_picture', 'followers', 'following']
         read_only_fields = ('followers', )
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -32,3 +32,9 @@ class LoginSerializer(serializers.Serializer):
             token, created = Token.objects.get_or_create(user=user)
             return {'user': UserSerializer(user).data, 'token':token.key}
         raise serializers.ValidationError("Invaid credentials")
+    
+class FollowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
+        
