@@ -8,6 +8,14 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
 
+    def get_likes_count(self, obj):
+        return obj.likes.count()
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = ['id', 'user', 'post', 'created_at']
+
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
 
