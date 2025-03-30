@@ -28,6 +28,6 @@ class CommentViewSet(viewsets.ModelViewSet):
 @permission_classes([permissions.IsAuthenticated])
 def user_feed(request):
     following_users = request.user.following.all()
-    posts = Post.objects.filter(author__in=following_users.order_by('-created_at'))
+    posts = Post.objects.filter(author__in=following_users.order_by)
     serializer = PostSerializer(posts, many=True)
     return Response(serializer.data)
