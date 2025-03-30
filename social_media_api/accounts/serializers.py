@@ -24,11 +24,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
-    password = serializers.CharField()
+    password = serializers.CharField(write_only=True)
 
     def validate(self, data):
         user = authenticate(**data)
         if user and user.is_active:
             token, created = Token.objects.get_or_create(user=user)
-            return {'user': user, 'token':token}
+            return {'user': UserSerializer(user).data, 'token':token.key}
         raise serializers.ValidationError("Invaid credentials")
