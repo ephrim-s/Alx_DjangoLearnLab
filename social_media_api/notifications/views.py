@@ -7,4 +7,4 @@ class NotificationListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return self.request.user.notifications.all().order_by('-timestamp').
+        return self.request.user.notifications.all().order_by('-timestamp')
